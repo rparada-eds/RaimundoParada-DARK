@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RFS — Nivel de Servicio Cyber S1 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg: #FEFEFE;
+  --surface: #F7F8FA;
+  --surface2: #EFF1F4;
+  --border: #E3E6EB;
+  --border-strong: #CDD1D9;
+  --text: #111318;
+  --text-dim: #5A6072;
+  --text-muted: #9AA0AE;
+  --red: #D0312D;
+  --red-soft: #FFF0F0;
+  --red-mid: #FFD9D9;
+  --amber: #C47400;
+  --amber-soft: #FFF8EC;
+  --amber-mid: #FFE5A0;
+  --green: #1A7A4A;
+  --green-soft: #F0FBF5;
+  --green-mid: #C4EEDA;
+  --blue: #1D5FB4;
+  --blue-soft: #EEF4FF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* HEADER */
+.header {
+  background: var(--text);
+  color: #fff;
+  padding: 40px 52px 36px;
+}
+.header-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 14px;
+}
+.header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.header h1 em { color: #F87171; font-style: normal; }
+.header-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 6px;
+}
+.header-meta {
+  display: flex;
+  gap: 24px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.header-stat { }
+.header-stat-val {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.header-stat-val.danger { color: #F87171; }
+.header-stat-val.warn { color: #FCD34D; }
+.header-stat-val.ok { color: #6EE7B7; }
+.header-stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 3px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* NAVIGATION TABS */
+.nav {
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 52px;
+  display: flex;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-tab {
+  padding: 14px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.15s;
+  user-select: none;
+}
+.nav-tab:hover { color: var(--text); }
+.nav-tab.active {
+  color: var(--text);
+  border-bottom-color: var(--text);
+}
+
+/* MAIN */
+.main { padding: 36px 52px 60px; max-width: 1280px; margin: 0 auto; }
+
+/* SECTIONS */
+.section { display: none; }
+.section.active { display: block; }
+
+/* SECTION HEADER */
+.sec-header {
+  margin-bottom: 28px;
+}
+.sec-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.sec-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+.sec-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 6px;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* KPI CARDS */
+.kpi-row {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.kpi-4 { grid-template-columns: repeat(4, 1fr); }
+.kpi-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-2 { grid-template-columns: repeat(2, 1fr); }
+
+.kpi {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px 22px;
+}
+.kpi.danger {
+  background: var(--red-soft);
+  border-color: var(--red-mid);
+}
+.kpi.warn {
+  background: var(--amber-soft);
+  border-color: var(--amber-mid);
+}
+.kpi.ok {
+  background: var(--green-soft);
+  border-color: var(--green-mid);
+}
+.kpi-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.kpi.danger .kpi-label { color: #B91C1C; }
+.kpi.warn .kpi-label { color: #92400E; }
+.kpi.ok .kpi-label { color: #065F46; }
+.kpi-value {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text);
+}
+.kpi.danger .kpi-value { color: var(--red); }
+.kpi.warn .kpi-value { color: var(--amber); }
+.kpi.ok .kpi-value { color: var(--green); }
+.kpi-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+.kpi.danger .kpi-sub { color: #B91C1C; opacity: 0.7; }
+.kpi.warn .kpi-sub { color: #92400E; opacity: 0.7; }
+.kpi.ok .kpi-sub { color: #065F46; opacity: 0.7; }
+
+/* CHARTS */
+.chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.chart-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+.chart-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+}
+.chart-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+.chart-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 18px;
+  font-family: 'IBM Plex Mono', monospace;
+}
+canvas { display: block; width: 100% !important; }
+
+/* TABLES */
+.table-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.table-card-header {
+  padding: 16px 20px 14px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.table-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+.table-card-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+thead th {
+  padding: 10px 16px;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 400;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+thead th:not(:first-child) { text-align: right; }
+tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: var(--surface); }
+tbody td:not(:first-child) {
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+}
+
+/* BADGES */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'IBM Plex Mono', monospace;
+  white-space: nowrap;
+}
+.badge.danger { background: var(--red-soft); color: var(--red); border: 1px solid var(--red-mid); }
+.badge.warn { background: var(--amber-soft); color: var(--amber); border: 1px solid var(--amber-mid); }
+.badge.ok { background: var(--green-soft); color: var(--green); border: 1px solid var(--green-mid); }
+
+/* BAR INLINE */
+.bar-wrap { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.bar-bg { width: 72px; height: 5px; background: var(--surface2); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+.bar-fill { height: 100%; border-radius: 3px; }
+
+/* CALLOUT */
+.callout {
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.callout.danger {
+  background: var(--red-soft);
+  border: 1px solid var(--red-mid);
+  color: #7F1D1D;
+}
+.callout.warn {
+  background: var(--amber-soft);
+  border: 1px solid var(--amber-mid);
+  color: #78350F;
+}
+.callout.info {
+  background: var(--blue-soft);
+  border: 1px solid #BFDBFE;
+  color: #1E3A5F;
+}
+.callout strong { font-weight: 700; }
+
+/* DIVIDER */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 28px 0;
+}
+
+/* RESUMEN - lista */
+.resumen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.resumen-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+}
+.resumen-box-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 14px;
+}
+.resumen-box-title.danger { color: var(--red); }
+.resumen-box-title.warn { color: var(--amber); }
+.fact-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.fact-list li {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+}
+.fact-list li span.icon { flex-shrink: 0; font-size: 14px; }
+
+/* TARIFA BOX */
+.tarifa-big {
+  background: var(--red-soft);
+  border: 1.5px solid var(--red-mid);
+  border-radius: 12px;
+  padding: 28px 32px;
+  margin-bottom: 20px;
+}
+.tarifa-big-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 16px;
+}
+.tarifa-big-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+}
+.tarifa-stat {}
+.tarifa-stat-val {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  line-height: 1;
+}
+.tarifa-stat-label {
+  font-size: 12px;
+  color: #B91C1C;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+@media (max-width: 960px) {
+  .header { padding: 28px 24px; }
+  .main { padding: 24px; }
+  .kpi-4, .kpi-3, .kpi-2 { grid-template-columns: repeat(2, 1fr); }
+  .chart-grid-2, .chart-grid-3, .resumen-grid, .tarifa-big-row { grid-template-columns: 1fr; }
+  .nav { padding: 0 24px; overflow-x: auto; }
+  .header-meta { flex-wrap: wrap; gap: 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-eyebrow">Proveedor RFS · Reporte de Nivel de Servicio · Cyber S1 2026</div>
+  <h1>Evaluación de Incumplimiento<br>de Servicio Last Mile</h1>
+  <div class="header-sub">Base de análisis: 1.091 pedidos operados entre el 1 y 6 de junio de 2026</div>
+  <div class="header-meta">
+    <div class="header-stat">
+      <div class="header-stat-val danger">27.0%</div>
+      <div class="header-stat-label">Falla de entrega atribuible a RFS</div>
+    </div>
+    <div class="header-stat">
+      <div class="header-stat-val danger">86.3%</div>
+      <div class="header-stat-label">Incumplimiento SameDay (pedidos elegibles)</div>
+    </div>
+    <div class="header-stat">
+      <div class="header-stat-val warn">295</div>
+      <div class="header-stat-label">Pedidos con entrega fallida por RFS</div>
+    </div>
+    <div class="header-stat">
+      <div class="header-stat-val ok">71.3%</div>
+      <div class="header-stat-label">Entregados a tiempo (total universo)</div>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-tab active" onclick="showSection('resumen')">Resumen Ejecutivo</div>
+  <div class="nav-tab" onclick="showSection('entrega')">Entrega a Tiempo</div>
+  <div class="nav-tab" onclick="showSection('sameday')">SameDay & Tarifa</div>
+  <div class="nav-tab" onclick="showSection('bodega')">Por Bodega</div>
+  <div class="nav-tab" onclick="showSection('seller')">Por Seller</div>
+  <div class="nav-tab" onclick="showSection('dia')">Por Día</div>
+  <div class="nav-tab" onclick="showSection('comunas')">Por Comuna</div>
+</nav>
+
+<main class="main">
+
+<!-- =========================================================
+     SECCIÓN 1: RESUMEN EJECUTIVO
+     ========================================================= -->
+<div id="sec-resumen" class="section active">
+  <div class="sec-header">
+    <div class="sec-label">Vista General</div>
+    <div class="sec-title">Resumen Ejecutivo</div>
+    <div class="sec-desc">Dos métricas concentran la evaluación del servicio RFS: <strong>cumplimiento de entrega al cliente</strong> (la más importante, mide el impacto real en el consumidor final) y <strong>cumplimiento de la promesa SameDay</strong> (relevante para la discusión de tarifas). Ambas muestran niveles de falla críticos.</div>
+  </div>
+
+  <div class="kpi-row kpi-4">
+    <div class="kpi ok">
+      <div class="kpi-label">Entregados a Tiempo</div>
+      <div class="kpi-value">71.3%</div>
+      <div class="kpi-sub">778 de 1.091 pedidos</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">Entregados Atrasados</div>
+      <div class="kpi-value">24.8%</div>
+      <div class="kpi-sub">271 pedidos — falla RFS</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">No Entregados</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">+ 6 entregas incompletas</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-label">Responsabilidad Nuestra</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">Preparados atrasados — fuera del SLA de RFS</div>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <strong>Falla total atribuible a RFS: 295 pedidos (27.0% del universo).</strong> Esto incluye 271 entregados tarde, 18 no entregados y 6 incompletos. Solo 18 pedidos son responsabilidad nuestra por preparación tardía — y esos están excluidos del cargo a RFS.
+  </div>
+
+  <hr class="divider">
+
+  <div class="sec-label" style="margin-bottom:8px;">Segundo pilar: Promesa SameDay</div>
+  <div class="kpi-row kpi-3">
+    <div class="kpi danger">
+      <div class="kpi-label">Incumplimiento SameDay (total)</div>
+      <div class="kpi-value">68.6%</div>
+      <div class="kpi-sub">748 de 1.091 pedidos sin cumplir promesa</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">Incumplimiento SD (elegibles RFS)</div>
+      <div class="kpi-value">86.3%</div>
+      <div class="kpi-sub">489 de 569 pedidos donde el SLA era exigible</div>
+    </div>
+    <div class="kpi ok">
+      <div class="kpi-label">Cumplimiento SD (elegibles RFS)</div>
+      <div class="kpi-value">13.7%</div>
+      <div class="kpi-sub">Solo 78 pedidos elegibles cumplidos como SameDay</div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    De los <strong>569 pedidos preparados antes de las 13:30 hrs</strong> (donde RFS tiene obligación contractual de entrega el mismo día), la tasa de cumplimiento fue de solo el <strong>13.7%</strong>. En 489 casos donde cobró tarifa SameDay, el servicio entregado no fue SameDay.
+  </div>
+
+  <hr class="divider">
+
+  <div class="resumen-grid">
+    <div class="resumen-box">
+      <div class="resumen-box-title danger">Hechos Incontrovertibles</div>
+      <ul class="fact-list">
+        <li><span class="icon">→</span>295 pedidos (27%) con falla de entrega directamente atribuible a RFS</li>
+        <li><span class="icon">→</span>18 pedidos nunca fueron entregados al cliente final</li>
+        <li><span class="icon">→</span>El retraso promedio fue de 42.1 horas; el máximo alcanzó 139.6 horas (casi 6 días)</li>
+        <li><span class="icon">→</span>El 3 de junio, solo el 28% de los pedidos fue entregado a tiempo</li>
+        <li><span class="icon">→</span>Huechuraba (86.4%), San Miguel (78.6%) y La Reina (58.3%) son las comunas más afectadas</li>
+        <li><span class="icon">→</span>En el servicio "Same Day Programado", RFS entregó a tiempo solo el 52.6% de los pedidos</li>
+      </ul>
+    </div>
+    <div class="resumen-box">
+      <div class="resumen-box-title warn">Argumento de Descuento en Tarifa</div>
+      <ul class="fact-list">
+        <li><span class="icon">→</span>RFS justifica su tarifa alta por ofrecer servicio SameDay con salida directa desde bodega</li>
+        <li><span class="icon">→</span>En 489 pedidos elegibles, RFS cobró tarifa SD pero no entregó el mismo día</li>
+        <li><span class="icon">→</span>Esos 489 pedidos representan <strong>$30.4M CLP</strong> facturados con tarifa SD sin prestación SD</li>
+        <li><span class="icon">→</span>El incumplimiento SD fue transversal a todas las bodegas, sellers y días del evento</li>
+        <li><span class="icon">→</span>No hay excusa de preparación tardía: todos estos pedidos estaban listos antes de las 13:30 hrs</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 2: ENTREGA A TIEMPO (LA MÁS IMPORTANTE)
+     ========================================================= -->
+<div id="sec-entrega" class="section">
+  <div class="sec-header">
+    <div class="sec-label">Métrica Principal</div>
+    <div class="sec-title">Entrega a Tiempo — Impacto en el Cliente Final</div>
+    <div class="sec-desc">Esta métrica mide cuántos clientes recibieron su pedido dentro del plazo comprometido, independientemente del horario de preparación. Es la que refleja directamente la experiencia del consumidor y la responsabilidad operativa de RFS como carrier.</div>
+  </div>
+
+  <div class="kpi-row kpi-4">
+    <div class="kpi ok">
+      <div class="kpi-label">Entregados a Tiempo</div>
+      <div class="kpi-value">778</div>
+      <div class="kpi-sub">71.3% del total</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">Entregados Atrasados</div>
+      <div class="kpi-value">271</div>
+      <div class="kpi-sub">24.8% — atribuible a RFS</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">No Entregados</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-sub">1.6% — atribuible a RFS</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">Entregas Incompletas</div>
+      <div class="kpi-value">6</div>
+      <div class="kpi-sub">0.5% — atribuible a RFS</div>
+    </div>
+  </div>
+
+  <div class="callout danger">
+    <strong>Total fallas de entrega atribuibles a RFS: 295 pedidos (27.0%).</strong> Estos 295 casos no tienen relación con nuestra preparación: son pedidos donde RFS recibió la carga y falló en ejecutar la entrega dentro del plazo. Los 18 pedidos de "preparado atrasado" corresponden a responsabilidad nuestra y están excluidos de este cálculo.
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">Distribución Estado de Entrega</div>
+      <div class="chart-sub">Total 1.091 pedidos</div>
+      <canvas id="c-entrega-donut" height="230"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Días de Retraso — Pedidos Atrasados</div>
+      <div class="chart-sub">271 pedidos entregados fuera de plazo por RFS</div>
+      <canvas id="c-dias-retraso" height="230"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Detalle por Servicio — Entrega a Tiempo</span>
+      <span class="table-card-note">Clasificado por nombre de servicio RFS</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Servicio</th>
+          <th>Total</th>
+          <th>A Tiempo</th>
+          <th>Atrasados (RFS)</th>
+          <th>No Entregados</th>
+          <th>% A Tiempo</th>
+          <th>% Falla RFS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Same Day Programado</strong></td>
+          <td>407</td>
+          <td>214</td>
+          <td>174</td>
+          <td>15</td>
+          <td><span class="badge warn">52.6%</span></td>
+          <td><span class="badge danger">46.7%</span></td>
+        </tr>
+        <tr>
+          <td>Retiro en Sucursal Liquidos.cl</td>
+          <td>354</td>
+          <td>273</td>
+          <td>75</td>
+          <td>1</td>
+          <td><span class="badge warn">77.1%</span></td>
+          <td><span class="badge danger">21.5%</span></td>
+        </tr>
+        <tr>
+          <td>Recibe en 1 a 4 Días Hábiles</td>
+          <td>330</td>
+          <td>291</td>
+          <td>22</td>
+          <td>2</td>
+          <td><span class="badge ok">88.2%</span></td>
+          <td><span class="badge warn">7.3%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    El servicio <strong>"Same Day Programado"</strong> — el de mayor tarifa — fue el de peor desempeño: casi 1 de cada 2 pedidos (47.3%) llegó tarde o no llegó. Un cliente que pagó por entrega el mismo día tuvo solo un 52.6% de probabilidad de recibirla dentro del plazo.
+  </div>
+
+  <div class="chart-card" style="margin-bottom:20px;">
+    <div class="chart-title">Entrega a Tiempo vs. Atrasados por Servicio</div>
+    <div class="chart-sub">Comparativa de cumplimiento operativo por tipo de servicio</div>
+    <canvas id="c-entrega-servicio" height="160"></canvas>
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 3: SAMEDAY & ARGUMENTO TARIFA
+     ========================================================= -->
+<div id="sec-sameday" class="section">
+  <div class="sec-header">
+    <div class="sec-label">SameDay & Estructura Tarifaria</div>
+    <div class="sec-title">Cumplimiento SameDay — Base del Argumento de Tarifa</div>
+    <div class="sec-desc">RFS argumenta que sus tarifas son elevadas porque el servicio opera como SameDay con salida directa desde la bodega. El análisis muestra que en el 86.3% de los pedidos donde esa condición era exigible, dicha prestación no se realizó. Esto cuestiona directamente la justificación tarifaria.</div>
+  </div>
+
+  <div class="callout info">
+    <strong>Definición operativa del SLA SameDay:</strong> Todo pedido preparado antes de las 13:30 hrs debe ser entregado al cliente el mismo día. Si la preparación ocurre después de las 13:30 hrs o días posteriores, el incumplimiento es responsabilidad nuestra, no de RFS. El análisis siguiente se enfoca solo en los pedidos donde RFS tenía la obligación.
+  </div>
+
+  <div class="kpi-row kpi-3">
+    <div class="kpi">
+      <div class="kpi-label">Elegibles SameDay (antes 13:30)</div>
+      <div class="kpi-value">569</div>
+      <div class="kpi-sub">52.2% del total de pedidos</div>
+    </div>
+    <div class="kpi ok">
+      <div class="kpi-label">RFS cumplió SameDay</div>
+      <div class="kpi-value">78</div>
+      <div class="kpi-sub">13.7% de los elegibles</div>
+    </div>
+    <div class="kpi danger">
+      <div class="kpi-label">RFS NO cumplió SameDay</div>
+      <div class="kpi-value">489</div>
+      <div class="kpi-sub">86.3% de los elegibles</div>
+    </div>
+  </div>
+
+  <div class="tarifa-big">
+    <div class="tarifa-big-title">Impacto en Tarifa — Cobro Sin Prestación SameDay</div>
+    <div class="tarifa-big-row">
+      <div class="tarifa-stat">
+        <div class="tarifa-stat-val">489</div>
+        <div class="tarifa-stat-label">Pedidos elegibles donde RFS cobró tarifa SD sin prestar servicio SD</div>
+      </div>
+      <div class="tarifa-stat">
+        <div class="tarifa-stat-val">$30.4M</div>
+        <div class="tarifa-stat-label">CLP correspondiente a esos 489 pedidos facturados con tarifa SD</div>
+      </div>
+      <div class="tarifa-stat">
+        <div class="tarifa-stat-val">85.9%</div>
+        <div class="tarifa-stat-label">De los pedidos elegibles no corresponde cobro de tarifa SameDay</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>Aclaración importante:</strong> de los 489 pedidos elegibles donde RFS no cumplió SameDay, 343 fueron igual entregados a tiempo (pero no el mismo día), 133 llegaron tarde y 13 no fueron entregados. El argumento <strong>no es que esos pedidos no se paguen</strong>, sino que deben facturarse a <strong>tarifa estándar</strong>, no a tarifa SameDay, dado que la prestación real no fue SameDay.
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">Pedidos Elegibles SameDay — Resultado</div>
+      <div class="chart-sub">Solo pedidos preparados antes de las 13:30 hrs (n=569)</div>
+      <canvas id="c-sd-elegibles" height="230"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Estado de Preparación — Universo Total</div>
+      <div class="chart-sub">Distribución que determina responsabilidad</div>
+      <canvas id="c-prep-estado" height="230"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Elegibles SameDay por Tipo de Servicio</span>
+      <span class="table-card-note">Pedidos preparados antes 13:30 (obligación RFS)</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Servicio</th>
+          <th>Elegibles SD</th>
+          <th>Cumplió SD</th>
+          <th>No Cumplió SD</th>
+          <th>% Cumplimiento SD</th>
+          <th>Valor Sin Prestación SD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Same Day Programado</strong></td>
+          <td>215</td>
+          <td>25</td>
+          <td>188</td>
+          <td><span class="badge danger">11.6%</span></td>
+          <td>$16.1M CLP</td>
+        </tr>
+        <tr>
+          <td>Retiro en Sucursal Liquidos.cl</td>
+          <td>161</td>
+          <td>19</td>
+          <td>142</td>
+          <td><span class="badge danger">11.8%</span></td>
+          <td>$7.9M CLP</td>
+        </tr>
+        <tr>
+          <td>Recibe en 1 a 4 Días Hábiles</td>
+          <td>193</td>
+          <td>34</td>
+          <td>159</td>
+          <td><span class="badge danger">17.6%</span></td>
+          <td>$6.4M CLP</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    El servicio llamado <strong>"Same Day Programado"</strong> tuvo el peor cumplimiento de SameDay de todos: solo el 11.6% de los pedidos elegibles fue entregado el mismo día. Esto evidencia que el nombre comercial del servicio no se corresponde con la ejecución real.
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 4: POR BODEGA
+     ========================================================= -->
+<div id="sec-bodega" class="section">
+  <div class="sec-header">
+    <div class="sec-label">Desglose Operativo</div>
+    <div class="sec-title">Desempeño por Bodega</div>
+    <div class="sec-desc">La bodega Líquidos concentra el 69.7% del volumen y es la más afectada en términos absolutos y porcentuales de entrega.</div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">Entrega a Tiempo por Bodega</div>
+      <div class="chart-sub">% sobre total de pedidos de cada bodega</div>
+      <canvas id="c-bodega-entrega" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Cumplimiento SameDay por Bodega</div>
+      <div class="chart-sub">% cumplimiento SameDay sobre total</div>
+      <canvas id="c-bodega-sd" height="220"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Detalle por Bodega</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Bodega</th>
+          <th>Total</th>
+          <th>A Tiempo</th>
+          <th>Atrasados</th>
+          <th>No Entregados</th>
+          <th>Falló RFS</th>
+          <th>SD Cumplido</th>
+          <th>% A Tiempo</th>
+          <th>% SD</th>
+          <th>% Falla RFS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Líquidos</strong></td>
+          <td>761</td>
+          <td>487</td>
+          <td>249</td>
+          <td>16</td>
+          <td>268</td>
+          <td>212</td>
+          <td><span class="badge danger">64.0%</span></td>
+          <td><span class="badge danger">27.9%</span></td>
+          <td><span class="badge danger">35.2%</span></td>
+        </tr>
+        <tr>
+          <td>Buenaventura B2C</td>
+          <td>330</td>
+          <td>291</td>
+          <td>22</td>
+          <td>2</td>
+          <td>27</td>
+          <td>117</td>
+          <td><span class="badge ok">88.2%</span></td>
+          <td><span class="badge warn">35.5%</span></td>
+          <td><span class="badge warn">8.2%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    <strong>Líquidos</strong> es donde el impacto es más severo: 249 pedidos atrasados y 16 no entregados, con una tasa de falla RFS del 35.2%. Solo 64% de los pedidos llegó a tiempo. El cumplimiento SameDay del 27.9% indica que RFS falló en 3 de cada 4 pedidos de esta bodega donde el SLA era exigible.
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 5: POR SELLER
+     ========================================================= -->
+<div id="sec-seller" class="section">
+  <div class="sec-header">
+    <div class="sec-label">Desglose Operativo</div>
+    <div class="sec-title">Desempeño por Seller / Marca</div>
+    <div class="sec-desc">Ningún seller alcanzó un nivel de entrega a tiempo aceptable para el volumen operado. Liquidos como marca es el más perjudicado en términos absolutos.</div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">% Entrega a Tiempo por Seller</div>
+      <div class="chart-sub">Comparativa de cumplimiento de entrega</div>
+      <canvas id="c-seller-entrega" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">% Cumplimiento SameDay por Seller</div>
+      <div class="chart-sub">Sobre total de pedidos por marca</div>
+      <canvas id="c-seller-sd" height="220"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Detalle por Seller</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Seller</th>
+          <th>Total</th>
+          <th>A Tiempo</th>
+          <th>Atrasados (RFS)</th>
+          <th>No Entregados</th>
+          <th>SD Cumplido</th>
+          <th>% A Tiempo</th>
+          <th>% SD</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Liquidos</strong></td>
+          <td>761</td>
+          <td>487</td>
+          <td>249</td>
+          <td>16</td>
+          <td>212</td>
+          <td><span class="badge danger">64.0%</span></td>
+          <td><span class="badge danger">27.9%</span></td>
+        </tr>
+        <tr>
+          <td>Purisnacks</td>
+          <td>259</td>
+          <td>241</td>
+          <td>14</td>
+          <td>2</td>
+          <td>86</td>
+          <td><span class="badge ok">93.1%</span></td>
+          <td><span class="badge danger">33.2%</span></td>
+        </tr>
+        <tr>
+          <td>Mizos</td>
+          <td>64</td>
+          <td>44</td>
+          <td>8</td>
+          <td>0</td>
+          <td>28</td>
+          <td><span class="badge warn">68.8%</span></td>
+          <td><span class="badge warn">43.8%</span></td>
+        </tr>
+        <tr>
+          <td>Blokids</td>
+          <td>7</td>
+          <td>6</td>
+          <td>0</td>
+          <td>0</td>
+          <td>3</td>
+          <td><span class="badge ok">85.7%</span></td>
+          <td><span class="badge warn">42.9%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <strong>Purisnacks</strong> tiene una particularidad: 93.1% de entrega a tiempo pero solo 33.2% de cumplimiento SameDay. Esto muestra que RFS entregó dentro del plazo prometido al cliente (no SameDay, sino en días posteriores) pero no cumplió la promesa específica de entrega el mismo día. El argumento de tarifa aplica igualmente.
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 6: POR DÍA
+     ========================================================= -->
+<div id="sec-dia" class="section">
+  <div class="sec-header">
+    <div class="sec-label">Evolución Temporal</div>
+    <div class="sec-title">Desempeño por Día del Cyber</div>
+    <div class="sec-desc">El análisis diario revela que el incumplimiento no fue puntual sino sostenido durante todo el evento, con el colapso más severo el 3 de junio.</div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">Volumen de Pedidos por Día</div>
+      <div class="chart-sub">Fecha requerida de entrega · El 4-jun concentró el 63.7% del volumen</div>
+      <canvas id="c-dia-vol" height="220"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">% Entrega a Tiempo y % SameDay por Día</div>
+      <div class="chart-sub">Evolución del cumplimiento durante el evento</div>
+      <canvas id="c-dia-kpi" height="220"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Detalle Diario</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha Requerida</th>
+          <th>Pedidos</th>
+          <th>A Tiempo</th>
+          <th>Atrasados</th>
+          <th>No Entregados</th>
+          <th>SD Cumplido</th>
+          <th>% A Tiempo</th>
+          <th>% SameDay</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01 Jun 2026</td>
+          <td>15</td>
+          <td>15</td>
+          <td>0</td>
+          <td>0</td>
+          <td>15</td>
+          <td><span class="badge ok">100.0%</span></td>
+          <td><span class="badge ok">100.0%</span></td>
+        </tr>
+        <tr>
+          <td>02 Jun 2026</td>
+          <td>67</td>
+          <td>46</td>
+          <td>19</td>
+          <td>1</td>
+          <td>23</td>
+          <td><span class="badge warn">68.7%</span></td>
+          <td><span class="badge warn">34.3%</span></td>
+        </tr>
+        <tr style="background:#FFF0F0">
+          <td><strong>03 Jun 2026 ⚠</strong></td>
+          <td>93</td>
+          <td>26</td>
+          <td>59</td>
+          <td>7</td>
+          <td>14</td>
+          <td><span class="badge danger">28.0%</span></td>
+          <td><span class="badge danger">15.1%</span></td>
+        </tr>
+        <tr>
+          <td>04 Jun 2026</td>
+          <td>695</td>
+          <td>547</td>
+          <td>126</td>
+          <td>4</td>
+          <td>211</td>
+          <td><span class="badge warn">78.7%</span></td>
+          <td><span class="badge danger">30.4%</span></td>
+        </tr>
+        <tr>
+          <td>05 Jun 2026</td>
+          <td>118</td>
+          <td>62</td>
+          <td>47</td>
+          <td>5</td>
+          <td>37</td>
+          <td><span class="badge danger">52.5%</span></td>
+          <td><span class="badge danger">31.4%</span></td>
+        </tr>
+        <tr>
+          <td>06 Jun 2026</td>
+          <td>103</td>
+          <td>82</td>
+          <td>20</td>
+          <td>1</td>
+          <td>29</td>
+          <td><span class="badge warn">79.6%</span></td>
+          <td><span class="badge danger">28.2%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    <strong>3 de junio fue el día crítico:</strong> solo 28% de entrega a tiempo y 15.1% de cumplimiento SameDay. Con 59 pedidos atrasados y 7 no entregados sobre apenas 93 pedidos, el colapso operativo de RFS fue total ese día. Ninguno de esos pedidos fue responsabilidad de preparación tardía nuestra.
+  </div>
+</div>
+
+<!-- =========================================================
+     SECCIÓN 7: COMUNAS
+     ========================================================= -->
+<div id="sec-comunas" class="section">
+  <div class="sec-header">
+    <div class="sec-label">Cobertura Geográfica</div>
+    <div class="sec-title">Desempeño por Comuna</div>
+    <div class="sec-desc">Varias comunas muestran tasas de atraso superiores al 50%, lo que evidencia problemas de cobertura geográfica estructural en el servicio de RFS durante el Cyber.</div>
+  </div>
+
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">% Entrega a Tiempo por Comuna</div>
+      <div class="chart-sub">Comunas con ≥5 pedidos · Ordenado de peor a mejor</div>
+      <canvas id="c-com-entrega" height="320"></canvas>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Volumen vs. % A Tiempo por Comuna</div>
+      <div class="chart-sub">Tamaño de burbuja = pedidos totales</div>
+      <canvas id="c-com-bubble" height="320"></canvas>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-card-header">
+      <span class="table-card-title">Todas las Comunas (≥5 pedidos)</span>
+      <span class="table-card-note">Ordenado por % atrasados descendente</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Comuna</th>
+          <th>Total</th>
+          <th>A Tiempo</th>
+          <th>Atrasados</th>
+          <th>No Entregados</th>
+          <th>% A Tiempo</th>
+          <th>% Atrasados</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Huechuraba</td><td>22</td><td>3</td><td>19</td><td>0</td>
+          <td><span class="badge danger">13.6%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:86%;background:var(--red)"></div></div><span class="badge danger">86.4%</span></div></td>
+        </tr>
+        <tr>
+          <td>San Miguel</td><td>14</td><td>3</td><td>11</td><td>0</td>
+          <td><span class="badge danger">21.4%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:79%;background:var(--red)"></div></div><span class="badge danger">78.6%</span></div></td>
+        </tr>
+        <tr>
+          <td>Recoleta</td><td>6</td><td>1</td><td>4</td><td>0</td>
+          <td><span class="badge danger">16.7%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:67%;background:var(--red)"></div></div><span class="badge danger">66.7%</span></div></td>
+        </tr>
+        <tr>
+          <td>Peñalolén</td><td>31</td><td>11</td><td>19</td><td>0</td>
+          <td><span class="badge danger">35.5%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:61%;background:var(--red)"></div></div><span class="badge danger">61.3%</span></div></td>
+        </tr>
+        <tr>
+          <td>Colina</td><td>22</td><td>6</td><td>13</td><td>2</td>
+          <td><span class="badge danger">27.3%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:59%;background:var(--red)"></div></div><span class="badge danger">59.1%</span></div></td>
+        </tr>
+        <tr>
+          <td>La Reina</td><td>36</td><td>12</td><td>21</td><td>3</td>
+          <td><span class="badge danger">33.3%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:58%;background:var(--red)"></div></div><span class="badge danger">58.3%</span></div></td>
+        </tr>
+        <tr>
+          <td>Santiago</td><td>60</td><td>24</td><td>31</td><td>0</td>
+          <td><span class="badge danger">40.0%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:52%;background:var(--amber)"></div></div><span class="badge warn">51.7%</span></div></td>
+        </tr>
+        <tr>
+          <td>Puente Alto</td><td>16</td><td>9</td><td>6</td><td>1</td>
+          <td><span class="badge warn">56.2%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:37%;background:var(--amber)"></div></div><span class="badge warn">37.5%</span></div></td>
+        </tr>
+        <tr>
+          <td>Ñuñoa</td><td>169</td><td>118</td><td>47</td><td>2</td>
+          <td><span class="badge warn">69.8%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:28%;background:var(--amber)"></div></div><span class="badge warn">27.8%</span></div></td>
+        </tr>
+        <tr>
+          <td>La Florida</td><td>22</td><td>16</td><td>5</td><td>1</td>
+          <td><span class="badge warn">72.7%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:23%;background:var(--amber)"></div></div><span class="badge warn">22.7%</span></div></td>
+        </tr>
+        <tr>
+          <td>Providencia</td><td>143</td><td>116</td><td>22</td><td>3</td>
+          <td><span class="badge ok">81.1%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:15%;background:var(--green)"></div></div><span class="badge ok">15.4%</span></div></td>
+        </tr>
+        <tr>
+          <td>Vitacura</td><td>95</td><td>75</td><td>14</td><td>1</td>
+          <td><span class="badge ok">78.9%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:15%;background:var(--green)"></div></div><span class="badge ok">14.7%</span></div></td>
+        </tr>
+        <tr>
+          <td>Maipú</td><td>34</td><td>29</td><td>5</td><td>0</td>
+          <td><span class="badge ok">85.3%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:15%;background:var(--green)"></div></div><span class="badge ok">14.7%</span></div></td>
+        </tr>
+        <tr>
+          <td>Las Condes</td><td>324</td><td>283</td><td>33</td><td>3</td>
+          <td><span class="badge ok">87.3%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:10%;background:var(--green)"></div></div><span class="badge ok">10.2%</span></div></td>
+        </tr>
+        <tr>
+          <td>Macul</td><td>21</td><td>19</td><td>2</td><td>0</td>
+          <td><span class="badge ok">90.5%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:10%;background:var(--green)"></div></div><span class="badge ok">9.5%</span></div></td>
+        </tr>
+        <tr>
+          <td>Lo Barnechea</td><td>50</td><td>41</td><td>6</td><td>2</td>
+          <td><span class="badge ok">82.0%</span></td>
+          <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:12%;background:var(--green)"></div></div><span class="badge ok">12.0%</span></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout danger">
+    <strong>Patrón claro:</strong> RFS opera bien en el eje oriente de alta densidad (Las Condes, Vitacura, Providencia) pero colapsa en comunas periféricas o fuera de ese corredor. Huechuraba (86.4% de atraso), San Miguel (78.6%) y La Reina (58.3%) evidencian una capacidad de cobertura geográfica insuficiente para el nivel de servicio contratado.
+  </div>
+</div>
+
+</main>
+
+<footer style="border-top:1px solid var(--border);padding:20px 52px;display:flex;justify-content:space-between;align-items:center;background:var(--surface);">
+  <div style="font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;">Fuente: RFS_Cyber_S1_2026 · n=1.091 pedidos · 01–06 jun 2026</div>
+  <div style="font-size:11px;color:var(--text-muted);font-family:'IBM Plex Mono',monospace;">Documento interno · Reunión de indemnización proveedor RFS</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// Navigation
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Theme
+const RED = '#D0312D';
+const AMBER = '#C47400';
+const GREEN = '#1A7A4A';
+const BLUE = '#1D5FB4';
+const GRAY = '#9AA0AE';
+const RED_S = 'rgba(208,49,45,0.12)';
+const AMBER_S = 'rgba(196,116,0,0.12)';
+const GREEN_S = 'rgba(26,122,74,0.1)';
+
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.color = '#5A6072';
+Chart.defaults.borderColor = '#E3E6EB';
+
+// 1. Entrega donut
+new Chart(document.getElementById('c-entrega-donut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['A Tiempo (71.3%)', 'Atrasado RFS (24.8%)', 'No Entregado (1.6%)', 'Incompleto (0.5%)', 'Prep. Tardía Nuestra (1.6%)'],
+    datasets: [{ data: [778,271,18,6,18], backgroundColor:[GREEN,RED,RED,AMBER,GRAY], borderWidth:0, hoverOffset:5 }]
+  },
+  options: { responsive:true, cutout:'66%', plugins:{ legend:{position:'bottom',labels:{padding:14,font:{size:11}}} } }
+});
+
+// 2. Días retraso
+new Chart(document.getElementById('c-dias-retraso'), {
+  type: 'bar',
+  data: {
+    labels: ['Mismo día','1 día','2 días','3 días','4 días','5 días','6 días'],
+    datasets: [{ label:'Pedidos', data:[9,141,53,22,27,13,6],
+      backgroundColor:[AMBER,RED,RED,AMBER,AMBER,AMBER,AMBER], borderRadius:4, borderSkipped:false }]
+  },
+  options: { responsive:true, plugins:{legend:{display:false}},
+    scales:{ x:{grid:{display:false}}, y:{grid:{color:'#EFF1F4'},ticks:{stepSize:30}} } }
+});
+
+// 3. Entrega por servicio
+new Chart(document.getElementById('c-entrega-servicio'), {
+  type:'bar',
+  data:{
+    labels:['Same Day Programado','Retiro en Sucursal','Recibe 1–4 días hábiles'],
+    datasets:[
+      {label:'A Tiempo',data:[52.6,77.1,88.2],backgroundColor:GREEN,borderRadius:4},
+      {label:'Atrasado (RFS)',data:[42.8,21.2,6.7],backgroundColor:RED,borderRadius:4},
+      {label:'No Entregado',data:[3.7,0.3,0.6],backgroundColor:AMBER,borderRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}}}}
+});
+
+// 4. SD elegibles donut
+new Chart(document.getElementById('c-sd-elegibles'), {
+  type:'doughnut',
+  data:{
+    labels:['Cumplió SameDay (13.7%)','No cumplió SameDay (86.3%)'],
+    datasets:[{data:[78,489],backgroundColor:[GREEN,RED],borderWidth:0,hoverOffset:5}]
+  },
+  options:{responsive:true,cutout:'66%',plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}}}
+});
+
+// 5. Estado preparación
+new Chart(document.getElementById('c-prep-estado'), {
+  type:'doughnut',
+  data:{
+    labels:['Días antes, antes 13:30 ✓ RFS (45.9%)','Mismo día, antes 13:30 ✓ RFS (6.2%)','Días antes, después 13:30 ✗ Nosotros (45%)','Mismo día, después 13:30 ✗ Nosotros (0.5%)','Días después ✗ Nosotros (2.4%)'],
+    datasets:[{data:[501,68,491,5,26],backgroundColor:[GREEN,'#4ABA80',AMBER,'#E8C068',GRAY],borderWidth:0,hoverOffset:5}]
+  },
+  options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{padding:10,font:{size:10}}}}}
+});
+
+// 6. Bodega entrega
+new Chart(document.getElementById('c-bodega-entrega'), {
+  type:'bar', indexAxis:'y',
+  data:{
+    labels:['Buenaventura B2C','Líquidos'],
+    datasets:[
+      {label:'A Tiempo',data:[88.2,64.0],backgroundColor:GREEN,borderRadius:4},
+      {label:'Atrasado',data:[6.7,32.7],backgroundColor:RED,borderRadius:4},
+      {label:'No Entregado',data:[0.6,2.1],backgroundColor:AMBER,borderRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},
+    scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}},y:{stacked:true,grid:{display:false}}}}
+});
+
+// 7. Bodega SD
+new Chart(document.getElementById('c-bodega-sd'), {
+  type:'bar', indexAxis:'y',
+  data:{
+    labels:['Buenaventura B2C','Líquidos'],
+    datasets:[
+      {label:'SD Cumplido',data:[35.5,27.9],backgroundColor:GREEN,borderRadius:4},
+      {label:'SD No Cumplido',data:[64.5,72.1],backgroundColor:RED,borderRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},
+    scales:{x:{stacked:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}},y:{stacked:true,grid:{display:false}}}}
+});
+
+// 8. Seller entrega
+new Chart(document.getElementById('c-seller-entrega'), {
+  type:'bar',
+  data:{
+    labels:['Liquidos','Mizos','Blokids','Purisnacks'],
+    datasets:[
+      {label:'A Tiempo',data:[64.0,68.8,85.7,93.1],backgroundColor:GREEN,borderRadius:4},
+      {label:'Atrasado/No entregado',data:[34.8,12.5,0,6.2],backgroundColor:RED,borderRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},
+    scales:{x:{grid:{display:false}},y:{stacked:false,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}}}}
+});
+
+// 9. Seller SD
+new Chart(document.getElementById('c-seller-sd'), {
+  type:'bar',
+  data:{
+    labels:['Liquidos','Purisnacks','Mizos','Blokids'],
+    datasets:[
+      {label:'SD Cumplido',data:[27.9,33.2,43.8,42.9],backgroundColor:GREEN,borderRadius:4},
+      {label:'SD No Cumplido',data:[72.1,66.8,56.2,57.1],backgroundColor:RED,borderRadius:4}
+    ]
+  },
+  options:{responsive:true,plugins:{legend:{position:'bottom'}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}}}}
+});
+
+// 10. Volumen diario
+new Chart(document.getElementById('c-dia-vol'), {
+  type:'bar',
+  data:{
+    labels:['01-jun','02-jun','03-jun','04-jun','05-jun','06-jun'],
+    datasets:[{label:'Pedidos',data:[15,67,93,695,118,103],
+      backgroundColor:['rgba(26,122,74,0.2)','rgba(208,49,45,0.2)','rgba(208,49,45,0.3)','rgba(208,49,45,0.2)','rgba(196,116,0,0.2)','rgba(208,49,45,0.2)'],
+      borderColor:[GREEN,RED,RED,RED,AMBER,RED],borderWidth:1,borderRadius:4,borderSkipped:false}]
+  },
+  options:{responsive:true,plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}},y:{grid:{color:'#EFF1F4'}}}}
+});
+
+// 11. KPI diario líneas
+new Chart(document.getElementById('c-dia-kpi'), {
+  type:'line',
+  data:{
+    labels:['01-jun','02-jun','03-jun','04-jun','05-jun','06-jun'],
+    datasets:[
+      {label:'% A Tiempo',data:[100,68.7,28.0,78.7,52.5,79.6],
+        borderColor:BLUE,backgroundColor:'rgba(29,95,180,0.08)',fill:true,tension:0.3,pointBackgroundColor:BLUE,pointRadius:5},
+      {label:'% SameDay',data:[100,34.3,15.1,30.4,31.4,28.2],
+        borderColor:RED,backgroundColor:'rgba(208,49,45,0.07)',fill:true,tension:0.3,pointBackgroundColor:RED,pointRadius:5}
+    ]
+  },
+  options:{responsive:true,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'bottom',labels:{padding:14,font:{size:11}}}},
+    scales:{x:{grid:{display:false}},y:{min:0,max:110,grid:{color:'#EFF1F4'},ticks:{callback:v=>v+'%'}}}}
+});
+
+// 12. Comunas entrega bar horizontal
+new Chart(document.getElementById('c-com-entrega'), {
+  type:'bar', indexAxis:'y',
+  data:{
+    labels:['Macul','Las Condes','Maipú','Lo Barnechea','Providencia','Vitacura','La Florida','Puente Alto','Ñuñoa','Santiago','La Reina','Colina','Peñalolén','Recoleta','San Miguel','Huechuraba'],
+    datasets:[{label:'% A Tiempo',
+      data:[90.5,87.3,85.3,82.0,81.1,78.9,72.7,56.2,69.8,40.0,33.3,27.3,35.5,16.7,21.4,13.6],
+      backgroundColor:['#1A7A4A','#1A7A4A','#1A7A4A','#1A7A4A','#1A7A4A','#1A7A4A','#C47400','#C47400','#C47400','#D0312D','#D0312D','#D0312D','#D0312D','#D0312D','#D0312D','#D0312D'],
+      borderRadius:3,borderSkipped:false}]
+  },
+  options:{responsive:true,plugins:{legend:{display:false}},
+    scales:{x:{max:100,ticks:{callback:v=>v+'%'},grid:{color:'#EFF1F4'}},y:{grid:{display:false},ticks:{font:{size:11}}}}}
+});
+
+// 13. Bubble chart comunas
+new Chart(document.getElementById('c-com-bubble'), {
+  type:'bubble',
+  data:{
+    datasets:[{
+      label:'Comunas',
+      data:[
+        {x:87.3,y:10.2,r:Math.sqrt(324)*1.5,label:'Las Condes'},
+        {x:69.8,y:27.8,r:Math.sqrt(169)*1.5,label:'Ñuñoa'},
+        {x:81.1,y:15.4,r:Math.sqrt(143)*1.5,label:'Providencia'},
+        {x:78.9,y:14.7,r:Math.sqrt(95)*1.5,label:'Vitacura'},
+        {x:40.0,y:51.7,r:Math.sqrt(60)*1.5,label:'Santiago'},
+        {x:33.3,y:58.3,r:Math.sqrt(36)*1.5,label:'La Reina'},
+        {x:35.5,y:61.3,r:Math.sqrt(31)*1.5,label:'Peñalolén'},
+        {x:27.3,y:59.1,r:Math.sqrt(22)*1.5,label:'Colina'},
+        {x:13.6,y:86.4,r:Math.sqrt(22)*1.5,label:'Huechuraba'},
+        {x:21.4,y:78.6,r:Math.sqrt(14)*1.5,label:'San Miguel'},
+        {x:85.3,y:14.7,r:Math.sqrt(34)*1.5,label:'Maipú'},
+        {x:82.0,y:12.0,r:Math.sqrt(50)*1.5,label:'Lo Barnechea'}
+      ],
+      backgroundColor: function(ctx) {
+        const v = ctx.raw;
+        if (!v) return GRAY;
+        if (v.x < 50) return 'rgba(208,49,45,0.5)';
+        if (v.x < 75) return 'rgba(196,116,0,0.5)';
+        return 'rgba(26,122,74,0.5)';
+      },
+      borderWidth:0
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:ctx=>`${ctx.raw.label}: ${ctx.raw.x}% a tiempo`}}
+    },
+    scales:{
+      x:{title:{display:true,text:'% Entregado a Tiempo'},min:0,max:100,grid:{color:'#EFF1F4'},ticks:{callback:v=>v+'%'}},
+      y:{title:{display:true,text:'% Atrasado'},min:0,max:100,grid:{color:'#EFF1F4'},ticks:{callback:v=>v+'%'}}
+    }
+  }
+});
+</script>
+</body>
+</html>
